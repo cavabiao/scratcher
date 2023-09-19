@@ -84,8 +84,9 @@ class _BasicScreenState extends State<BasicScreen> {
                     key: key,
                     enabled: enabled,
                     brushSize: brushSize,
+                    color: Colors.transparent,
                     threshold: 30,
-                    image: Image.asset('assets/background.jpg'),
+                    image: Image.asset('assets/op.png'),
                     onThreshold: () => setState(() => thresholdReached = true),
                     onChange: (value) {
                       setState(() {
@@ -101,34 +102,40 @@ class _BasicScreenState extends State<BasicScreen> {
                     onScratchEnd: () {
                       print("Scratching has finished");
                     },
-                    child: Container(
-                      color: Colors.black,
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Scratch the screen!',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 36,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.amber,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          const Text(
-                            'Photo by Fabian Wiktor from Pexels',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.amber,
-                            ),
-                          )
-                        ],
-                      ),
+                    child: Image.asset(
+                      'assets/bg.jpeg',
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
                     ),
+                    // child: Container(
+                    //   color: Colors.black,
+                    //   alignment: Alignment.center,
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       const Text(
+                    //         'Scratch the screen!',
+                    //         textAlign: TextAlign.center,
+                    //         style: TextStyle(
+                    //           fontSize: 36,
+                    //           fontWeight: FontWeight.bold,
+                    //           color: Colors.amber,
+                    //         ),
+                    //       ),
+                    //       SizedBox(height: 8),
+                    //       const Text(
+                    //         'Photo by Fabian Wiktor from Pexels',
+                    //         textAlign: TextAlign.center,
+                    //         style: TextStyle(
+                    //           fontSize: 12,
+                    //           fontWeight: FontWeight.bold,
+                    //           color: Colors.amber,
+                    //         ),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                   ),
                 ),
                 Positioned(

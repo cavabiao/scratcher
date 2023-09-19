@@ -111,6 +111,9 @@ class ScratcherState extends State<Scratcher> {
   Duration? transitionDuration;
   Size? _lastKnownSize;
 
+  double _xnbLeft = 0;
+  double _xnbTop = 0;
+
   RenderBox? get _renderObject {
     return context.findRenderObject() as RenderBox?;
   }
@@ -140,6 +143,10 @@ class ScratcherState extends State<Scratcher> {
                     widget.onScratchStart?.call();
                     if (widget.enabled) {
                       _addPoint(details.localPosition);
+                      setState(() {
+                        _xnbLeft = details.localPosition.dx;
+                        _xnbTop = details.localPosition.dy;
+                      });
                     }
                   }
                 : null,
@@ -148,6 +155,10 @@ class ScratcherState extends State<Scratcher> {
                     widget.onScratchUpdate?.call();
                     if (widget.enabled) {
                       _addPoint(details.localPosition);
+                      setState(() {
+                        _xnbLeft = details.localPosition.dx;
+                        _xnbTop = details.localPosition.dy;
+                      });
                     }
                   }
                 : null,
@@ -159,33 +170,39 @@ class ScratcherState extends State<Scratcher> {
                     }
                   }
                 : null,
-            child: AnimatedSwitcher(
-              duration: transitionDuration ?? Duration.zero,
-              child: isFinished
-                  ? widget.child
-                  : CustomPaint(
-                      foregroundPainter: ScratchPainter(
-                        image: snapshot.data,
-                        imageFit: widget.image == null
-                            ? null
-                            : widget.image!.fit ?? BoxFit.cover,
-                        points: points,
-                        color: widget.color,
-                        onDraw: (size) {
-                          if (_lastKnownSize == null) {
-                            _setCheckpoints(size);
-                          } else if (_lastKnownSize != size &&
-                              widget.rebuildOnResize) {
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              reset();
-                            });
-                          }
+            child: Stack(
+              children: [
+                AnimatedSwitcher(
+                  duration: transitionDuration ?? Duration.zero,
+                  child: isFinished
+                      ? widget.child
+                      : CustomPaint(
+                          foregroundPainter: ScratchPainter(
+                            image: snapshot.data,
+                            imageFit: widget.image == null
+                                ? null
+                                : widget.image!.fit ?? BoxFit.cover,
+                            points: points,
+                            color: widget.color,
+                            onDraw: (size) {
+                              if (_lastKnownSize == null) {
+                                _setCheckpoints(size);
+                              } else if (_lastKnownSize != size &&
+                                  widget.rebuildOnResize) {
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  reset();
+                                });
+                              }
 
-                          _lastKnownSize = size;
-                        },
-                      ),
-                      child: widget.child,
-                    ),
+                              _lastKnownSize = size;
+                            },
+                          ),
+                          child: widget.child,
+                        ),
+                ),
+                Positioned(child: Image.asset('assets/xnb.png',width: 113, height: 133),left: _xnbLeft, top: _xnbTop,),
+              ],
             ),
           );
         }

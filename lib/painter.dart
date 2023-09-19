@@ -31,6 +31,7 @@ class ScratchPainter extends CustomPainter {
   Paint _getMainPaint(double strokeWidth) {
     final paint = Paint()
       ..strokeCap = StrokeCap.round
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 10)
       ..color = Colors.white
       ..strokeWidth = strokeWidth
       ..blendMode = BlendMode.clear
@@ -87,6 +88,7 @@ class ScratchPainter extends CustomPainter {
 
     if (previousPoint != null) {
       canvas.drawPath(path, _getMainPaint(previousPoint.size));
+      // canvas.drawCircle(Offset(previousPoint.position!.dx, previousPoint.position!.dy), 20, _getMainPaint(previousPoint.size));
     }
 
     canvas.restore();

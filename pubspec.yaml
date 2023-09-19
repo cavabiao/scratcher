@@ -1,18 +1,14 @@
 name: scratcher
 description: Scratch card widget which temporarily hides content from the user.
-homepage: https://github.com/vintage/scratcher
-
+homepage: 'https://github.com/vintage/scratcher'
 version: 2.4.0
-
 environment:
-  sdk: ">=3.0.5 <4.0.0"
-  flutter: ">=3.13.0"
-
+  sdk: '>=3.0.5 <4.0.0'
+  flutter: '>=3.13.0'
 dependencies:
   flutter:
     sdk: flutter
-
 dev_dependencies:
-  lint:
+  lint: null
   flutter_test:
     sdk: flutter
