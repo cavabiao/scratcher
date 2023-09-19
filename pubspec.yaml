@@ -3,8 +3,8 @@ description: Scratch card widget which temporarily hides content from the user.
 homepage: 'https://github.com/vintage/scratcher'
 version: 2.4.0
 environment:
-  sdk: '>=3.0.5 <4.0.0'
-  flutter: '>=3.13.0'
+  sdk: '>=2.19.6 <3.0.0'
+  flutter: '>=2.5.0'
 dependencies:
   flutter:
     sdk: flutter
