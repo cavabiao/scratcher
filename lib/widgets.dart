@@ -113,6 +113,7 @@ class ScratcherState extends State<Scratcher> {
 
   double _xnbLeft = 0;
   double _xnbTop = 0;
+  bool _touchEnd = false;
 
   RenderBox? get _renderObject {
     return context.findRenderObject() as RenderBox?;
@@ -144,6 +145,7 @@ class ScratcherState extends State<Scratcher> {
                     if (widget.enabled) {
                       _addPoint(details.localPosition);
                       setState(() {
+                        _touchEnd = false;
                         _xnbLeft = details.localPosition.dx;
                         _xnbTop = details.localPosition.dy;
                       });
@@ -156,6 +158,7 @@ class ScratcherState extends State<Scratcher> {
                     if (widget.enabled) {
                       _addPoint(details.localPosition);
                       setState(() {
+                        _touchEnd = false;
                         _xnbLeft = details.localPosition.dx;
                         _xnbTop = details.localPosition.dy;
                       });
@@ -166,7 +169,10 @@ class ScratcherState extends State<Scratcher> {
                 ? (details) {
                     widget.onScratchEnd?.call();
                     if (widget.enabled) {
-                      setState(() => points.add(null));
+                      setState(() {
+                        points.add(null);
+                        _touchEnd = true;
+                      });
                     }
                   }
                 : null,
@@ -201,7 +207,15 @@ class ScratcherState extends State<Scratcher> {
                           child: widget.child,
                         ),
                 ),
-                Positioned(child: Image.asset('assets/xnb.png',width: 113, height: 133),left: _xnbLeft, top: _xnbTop,),
+                if (_touchEnd)
+                  Container()
+                else
+                  Positioned(
+                    left: _xnbLeft - 50,
+                    top: _xnbTop - 50,
+                    child:
+                        Image.asset('assets/xnb.png', width: 113, height: 133),
+                  ),
               ],
             ),
           );
