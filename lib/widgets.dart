@@ -43,6 +43,7 @@ class Scratcher extends StatefulWidget {
     this.accuracy = ScratchAccuracy.high,
     this.color = Colors.black,
     this.image,
+    this.pointerImage,
     this.rebuildOnResize = true,
     this.onChange,
     this.onThreshold,
@@ -72,6 +73,8 @@ class Scratcher extends StatefulWidget {
 
   /// Image widget used to cover the child widget.
   final Image? image;
+
+  final Image? pointerImage;
 
   /// Determines if the scratcher should rebuild itself when space constraints change (resize).
   final bool rebuildOnResize;
@@ -207,14 +210,13 @@ class ScratcherState extends State<Scratcher> {
                           child: widget.child,
                         ),
                 ),
-                if (_touchEnd)
+                if (_touchEnd || widget.pointerImage == null)
                   Container()
                 else
                   Positioned(
                     left: _xnbLeft - 50,
                     top: _xnbTop - 50,
-                    child:
-                        Image.asset('assets/xnb.png', width: 113, height: 133),
+                    child: widget.pointerImage!,
                   ),
               ],
             ),

@@ -83,6 +83,7 @@ class _BasicScreenState extends State<BasicScreen> {
                   child: Scratcher(
                     key: key,
                     enabled: enabled,
+                    pointerImage: Image.asset('assets/xnb.png', width: 113, height: 133),
                     brushSize: brushSize,
                     color: Colors.transparent,
                     threshold: 30,
