@@ -94,13 +94,13 @@ class _BasicScreenState extends State<BasicScreen> {
                         progress = value;
                       });
                     },
-                    onScratchStart: () {
-                      print("Scratching has started");
+                    onScratchStart: (details) {
+                      print("Scratching has started" + details.localPosition.toString());
                     },
-                    onScratchUpdate: () {
-                      print("Scratching in progress");
+                    onScratchUpdate: (details) {
+                      print("Scratching in progress" + details.localPosition.toString());
                     },
-                    onScratchEnd: () {
+                    onScratchEnd: (details) {
                       print("Scratching has finished");
                     },
                     child: Image.asset(

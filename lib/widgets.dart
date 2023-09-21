@@ -86,13 +86,13 @@ class Scratcher extends StatefulWidget {
   final VoidCallback? onThreshold;
 
   /// Callback called when scratching starts
-  final VoidCallback? onScratchStart;
+  final Function(DragStartDetails details)? onScratchStart;
 
   /// Callback called during scratching
-  final VoidCallback? onScratchUpdate;
+  final Function(DragUpdateDetails details)? onScratchUpdate;
 
   /// Callback called when scratching ends
-  final VoidCallback? onScratchEnd;
+  final Function(DragEndDetails details)? onScratchEnd;
 
   @override
   ScratcherState createState() => ScratcherState();
@@ -116,7 +116,7 @@ class ScratcherState extends State<Scratcher> {
 
   double _xnbLeft = 0;
   double _xnbTop = 0;
-  bool _touchEnd = false;
+  bool _touchEnd = true;
 
   RenderBox? get _renderObject {
     return context.findRenderObject() as RenderBox?;
@@ -144,7 +144,7 @@ class ScratcherState extends State<Scratcher> {
             behavior: HitTestBehavior.opaque,
             onPanStart: canScratch
                 ? (details) {
-                    widget.onScratchStart?.call();
+                    widget.onScratchStart?.call(details);
                     if (widget.enabled) {
                       _addPoint(details.localPosition);
                       setState(() {
@@ -157,7 +157,7 @@ class ScratcherState extends State<Scratcher> {
                 : null,
             onPanUpdate: canScratch
                 ? (details) {
-                    widget.onScratchUpdate?.call();
+                    widget.onScratchUpdate?.call(details);
                     if (widget.enabled) {
                       _addPoint(details.localPosition);
                       setState(() {
@@ -170,7 +170,7 @@ class ScratcherState extends State<Scratcher> {
                 : null,
             onPanEnd: canScratch
                 ? (details) {
-                    widget.onScratchEnd?.call();
+                    widget.onScratchEnd?.call(details);
                     if (widget.enabled) {
                       setState(() {
                         points.add(null);
