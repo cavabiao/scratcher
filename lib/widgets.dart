@@ -114,6 +114,8 @@ class ScratcherState extends State<Scratcher> {
   Duration? transitionDuration;
   Size? _lastKnownSize;
 
+  bool firstTouched = false;
+
   double _xnbLeft = 0;
   double _xnbTop = 0;
   bool _touchEnd = true;
@@ -148,6 +150,7 @@ class ScratcherState extends State<Scratcher> {
                     if (widget.enabled) {
                       _addPoint(details.localPosition);
                       setState(() {
+                        firstTouched = true;
                         _touchEnd = false;
                         _xnbLeft = details.localPosition.dx;
                         _xnbTop = details.localPosition.dy;
@@ -210,6 +213,17 @@ class ScratcherState extends State<Scratcher> {
                           child: widget.child,
                         ),
                 ),
+                if (firstTouched || widget.pointerImage == null)
+                  Container()
+                else
+                  Positioned.fill(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 50, top: 50),
+                        child: widget.pointerImage,
+                      ),
+                    ),
+                  ),
                 if (_touchEnd || widget.pointerImage == null)
                   Container()
                 else
